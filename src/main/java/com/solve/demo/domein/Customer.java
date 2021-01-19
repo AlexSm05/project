@@ -11,8 +11,7 @@ import java.util.UUID;
 public class Customer {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @GeneratedValue
     private UUID id;
     private String name;
     private String phone;
