@@ -12,7 +12,7 @@ import static  org.springframework.test.web.servlet.request.MockMvcRequestBuilde
 
 
 @RunWith(SpringRunner.class)
-@WebMvcTest
+@WebMvcTest(controllers = HealthController.class)
 public class HealthControllerTest {
     @Autowired
     private MockMvc mvc;
