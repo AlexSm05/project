@@ -4,7 +4,8 @@ import lombok.Data;
 
 
 @Data
-public class CustomerCreateDTO {
+public class CustomerPatchDTO {
     private String name;
     private String phone;
+
 }

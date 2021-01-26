@@ -1,5 +1,6 @@
 package com.solve.demo.domein;
 
+import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.Id;
 import java.util.UUID;
 
 @Entity
+
 public class Customer {
 
     @Id
