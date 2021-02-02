@@ -5,6 +5,7 @@ import com.solve.demo.dto.CustomerCreateDTO;
 import com.solve.demo.dto.CustomerPatchDTO;
 import com.solve.demo.dto.CustomerReadDTO;
 import com.solve.demo.service.CustomerService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
@@ -14,6 +15,8 @@ import java.util.UUID;
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
+
+
     @GetMapping("/{id}")
     public CustomerReadDTO getCustomer(@PathVariable UUID id){
         return customerService.getCustomer(id);

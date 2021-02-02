@@ -7,6 +7,7 @@ import com.solve.demo.dto.CustomerPatchDTO;
 import com.solve.demo.dto.CustomerReadDTO;
 import com.solve.demo.exeprions.EntityNotFoundExeprion;
 import com.solve.demo.service.CustomerService;
+import com.solve.demo.service.TranslationService;
 import org.assertj.core.api.Assertions;
 import org.junit.Assert;
 import org.junit.Test;
@@ -18,9 +19,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.test.context.ActiveProfiles;
 
+
+import javax.swing.table.TableRowSorter;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -28,12 +30,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @RunWith(SpringRunner.class)
-@WebMvcTest
-public class CustomerControllerTest  {
+@WebMvcTest(controllers = CustomerController.class)
+@ActiveProfiles("test")
+public class CustomerControllerTest {
     @Autowired
     private MockMvc mvc;
     @Autowired
     private ObjectMapper objectMapper;
+
+
     @MockBean
     private CustomerService customerService;
 
@@ -85,6 +90,7 @@ public class CustomerControllerTest  {
         CustomerReadDTO actualCustomer=objectMapper.readValue(resultJson,CustomerReadDTO.class);
         Assertions.assertThat(actualCustomer).isEqualToComparingFieldByField(read);
     }
+
     @Test
     public void testPatchCustomer() throws Exception{
         CustomerPatchDTO patchDTO =new CustomerPatchDTO();
@@ -92,7 +98,6 @@ public class CustomerControllerTest  {
         patchDTO.setPhone("123");
 
         CustomerReadDTO read =createCustomerRead();
-
 
         Mockito.when(customerService.patchCustomer(read.getId(),patchDTO)).thenReturn(read);
 
@@ -104,14 +109,6 @@ public class CustomerControllerTest  {
 
         CustomerReadDTO actualCustomer=objectMapper.readValue(resultJson,CustomerReadDTO.class);
         Assert.assertEquals(read,actualCustomer);
-
-    }
-    private CustomerReadDTO createCustomerRead(){
-        CustomerReadDTO read =new CustomerReadDTO();
-        read.setId(UUID.randomUUID());
-        read.setName("qwe");
-        read.setPhone("123");
-        return read;
     }
 
     @Test
@@ -121,6 +118,14 @@ public class CustomerControllerTest  {
         mvc.perform(delete("/api/v1/customers/{id}",id.toString())).andExpect(status().isOk());
 
         Mockito.verify(customerService).deleteCustomer(id);
+    }
+
+    private CustomerReadDTO createCustomerRead(){
+        CustomerReadDTO read =new CustomerReadDTO();
+        read.setId(UUID.randomUUID());
+        read.setName("qwe");
+        read.setPhone("123");
+        return read;
     }
 
 }

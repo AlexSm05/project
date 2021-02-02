@@ -16,5 +16,31 @@
             <column name="name" type="varchar(50)"/>
             <column name="phone" type="varchar(30)"/>
         </createTable>
+        
+        <createTable tableName="master">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="name" type="varchar(50)"/>
+            <column name="phone" type="varchar(30)"/>
+            <column name="about" type="varchar(2000)"/>
+        </createTable>
+        
+        <createTable tableName="visit">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="customer_id" type="uuid">
+                <constraints referencedTableName="customer" referencedColumnNames="id"
+                             foreignKeyName="visit_customer_fk" nullable="false"/>
+            </column>
+            <column name="master_id" type="uuid">
+                <constraints referencedTableName="master" referencedColumnNames="id"
+                             foreignKeyName="visit_master_fk" nullable="false"/>
+            </column>
+            <column name="start_at" type="datetime"/>
+            <column name="end_at" type="datetime"/>
+            <column name="status" type="varchar(20)"/>
+        </createTable>
     </changeSet>
 </databaseChangeLog>

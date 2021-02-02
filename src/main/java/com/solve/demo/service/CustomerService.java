@@ -16,39 +16,27 @@ import java.util.UUID;
 public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private TranslationService translationService;
+
 
     public CustomerReadDTO getCustomer(UUID id){
         Customer customer= getCustomerRequired(id);
-        return toRead(customer);
-    }
-
-    private CustomerReadDTO toRead(Customer customer) {
-        CustomerReadDTO dto= new CustomerReadDTO();
-        dto.setId(customer.getId());
-        dto.setName(customer.getName());
-        dto.setPhone(customer.getPhone());
-        return dto;
+        return translationService.toRead(customer);
     }
 
     public CustomerReadDTO createCustomer(CustomerCreateDTO create){
-        Customer customer=new Customer();
-        customer.setPhone(create.getPhone());
-        customer.setName(create.getName());
+        Customer customer=translationService.toEntity(create);
         customer= customerRepository.save(customer);
-        return toRead(customer);
-
+        return translationService.toRead(customer);
     }
+
     @PatchMapping("/{id}")
     public CustomerReadDTO patchCustomer(UUID id, CustomerPatchDTO patch){
         Customer customer=getCustomerRequired(id);
-        if (patch.getPhone()!=null){
-            customer.setPhone(patch.getPhone());
-        }
-        if (patch.getName()!=null){
-            customer.setName(patch.getName());
-        }
+        translationService.patchEntity(patch,customer);
         customer=customerRepository.save(customer);
-        return toRead(customer);
+        return translationService.toRead(customer);
     }
 
     public Customer getCustomerRequired(UUID id){
@@ -56,7 +44,10 @@ public class CustomerService {
             throw new EntityNotFoundExeprion(Customer.class,id);
         });
     }
+
     public void deleteCustomer(UUID id){
         customerRepository.delete(getCustomerRequired(id));
     }
+
+
 }

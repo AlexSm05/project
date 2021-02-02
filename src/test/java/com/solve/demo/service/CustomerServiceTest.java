@@ -12,6 +12,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
@@ -28,12 +29,13 @@ public class CustomerServiceTest {
     @Autowired
     private  CustomerService customerService;
 
-   // @Test(expected = EntityNotFoundExeprion.class)
+
+    @Test(expected = EntityNotFoundExeprion.class)
     public void testGetCustomerWrongId(){
         customerService.getCustomer(UUID.randomUUID());
     }
 
-    //@Test
+    @Test
     public void testGetCustomer(){
         Customer customer=createCustomer();
         customer.setId(UUID.randomUUID());
@@ -43,7 +45,7 @@ public class CustomerServiceTest {
         Assertions.assertThat(readDTO).isEqualToComparingFieldByField(customer);
     }
 
-    //@Test
+    @Test
     public void testCreateCustomer(){
         CustomerCreateDTO createDTO=new CustomerCreateDTO();
         createDTO.setName("qwe");
@@ -70,6 +72,7 @@ public class CustomerServiceTest {
         customer=customerRepository.findById(read.getId()).get();
         Assertions.assertThat(customer).isEqualToComparingFieldByField(read);
     }
+
     @Test
     public void testPatchCustomerEmptyPatch(){
         Customer customer=createCustomer();
@@ -86,14 +89,6 @@ public class CustomerServiceTest {
         Assert.assertNotNull(customerAfterUpdate.getPhone());
 
         Assertions.assertThat(customer).isEqualToComparingFieldByField(customerAfterUpdate);
-
-    }
-
-    private Customer createCustomer(){
-        Customer customer=new Customer();
-        customer.setName("qwe");
-        customer.setPhone("123");
-        return customerRepository.save(customer);
     }
 
     @Test
@@ -109,4 +104,10 @@ public class CustomerServiceTest {
         customerService.deleteCustomer(UUID.randomUUID());
     }
 
+    private Customer createCustomer(){
+        Customer customer=new Customer();
+        customer.setName("qwe");
+        customer.setPhone("123");
+        return customerRepository.save(customer);
+    }
 }
