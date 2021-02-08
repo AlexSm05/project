@@ -3,6 +3,8 @@ package com.solve.demo.service;
 
 
 import com.solve.demo.domein.Visit;
+import com.solve.demo.dto.VisitFilter;
+import com.solve.demo.dto.VisitReadDTO;
 import com.solve.demo.service.TranslationService;
 
 import com.solve.demo.dto.VisitExtendedReadDTO;
@@ -12,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class VisitService {
@@ -26,6 +30,11 @@ public class VisitService {
     public VisitExtendedReadDTO getVisit(UUID id){
         Visit visit=getVisitRequider(id);
         return translationService.toReadExtended(visit);
+    }
+    public List<VisitReadDTO> getVisits(VisitFilter filter){
+        List<Visit> visits=visitRepository.findByFilter(filter);
+        return visits.stream().map(translationService::toRead).collect(Collectors.toList());
+
     }
     private Visit getVisitRequider(UUID id){
         return visitRepository.findById(id).orElseThrow(()->{

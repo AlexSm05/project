@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TranslationService {
-    @Autowired
-    private CustomerRepository customerRepository;
+
 
     public VisitExtendedReadDTO toReadExtended(Visit visit){
         VisitExtendedReadDTO dto =new VisitExtendedReadDTO();
@@ -23,6 +22,17 @@ public class TranslationService {
         dto.setMaster(toRead(visit.getMaster()));
         return dto;
     }
+    public VisitReadDTO toRead(Visit visit){
+        VisitReadDTO dto =new VisitReadDTO();
+        dto.setId(visit.getId());
+        dto.setStartAt(visit.getStartAt());
+        dto.setEndAt(visit.getEndAt());
+        dto.setStatus(visit.getStatus());
+        dto.setCustomerId(visit.getCustomer().getId());
+        dto.setMasterId(visit.getMaster().getId());
+        return dto;
+    }
+
 
     public CustomerReadDTO toRead(Customer customer) {
         CustomerReadDTO dto= new CustomerReadDTO();
