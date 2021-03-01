@@ -1,6 +1,5 @@
 package com.solve.demo.controller;
 
-import com.solve.demo.domein.Customer;
 import com.solve.demo.dto.CustomerCreateDTO;
 import com.solve.demo.dto.CustomerPatchDTO;
 import com.solve.demo.dto.CustomerReadDTO;

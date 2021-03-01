@@ -1,6 +1,6 @@
 package com.solve.demo.controller;
 
-import com.solve.demo.domein.Visit;
+
 import com.solve.demo.dto.VisitExtendedReadDTO;
 import com.solve.demo.dto.VisitFilter;
 import com.solve.demo.dto.VisitReadDTO;

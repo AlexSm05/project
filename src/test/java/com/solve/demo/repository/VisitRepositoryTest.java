@@ -5,6 +5,7 @@ import com.solve.demo.domein.Customer;
 import com.solve.demo.domein.Master;
 import com.solve.demo.domein.Visit;
 import com.solve.demo.domein.VisitStatus;
+import org.junit.Assert;
 import org.junit.Test;
 import org.assertj.core.api.Assertions;
 import org.junit.runner.RunWith;
@@ -17,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,6 +38,30 @@ public class VisitRepositoryTest {
     @Autowired
     private VisitRepository visitRepository;
 
+    @Test
+    public void testCreatedAtIsSet(){
+        Customer c=createCustomer();
+        Master m=createMaster();
+
+        Visit v =new Visit();
+        v.setCustomer(c);
+        v.setMaster(m);
+        v.setStartAt(LocalDateTime.of(2021,12,4,15,0,0)
+                .toInstant(ZoneOffset.UTC));
+        v.setEndAt(v.getStartAt().plus(1, ChronoUnit.HOURS));
+        v.setStatus(VisitStatus.SCHEDULED);
+        v = visitRepository.save(v);
+
+        Instant createdBeforeReload=v.getCreatedAt();
+        Assert.assertNotNull(createdBeforeReload);
+        v=visitRepository.findById(v.getId()).get();
+
+        Instant createdAfterReload=v.getCreatedAt();
+        Assert.assertNotNull(createdAfterReload);
+        Assert.assertEquals(createdBeforeReload,createdAfterReload);
+
+        
+    }
 
     @Test
     public void testGetMasterVisit(){

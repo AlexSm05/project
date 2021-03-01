@@ -41,6 +41,21 @@
             <column name="start_at" type="datetime"/>
             <column name="end_at" type="datetime"/>
             <column name="status" type="varchar(20)"/>
+            <column name="created_at" type="datetime"/>
+        </createTable>
+
+
+        <createTable tableName="vacation">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="start_at" type="date"/>
+            <column name="end_at" type="date"/>
+            <column name="master_id" type="uuid">
+                <constraints referencedTableName="master" referencedColumnNames="id"
+                         foreignKeyName="vacation_master_fk" nullable="false"/>
+            </column>
+
         </createTable>
     </changeSet>
 </databaseChangeLog>

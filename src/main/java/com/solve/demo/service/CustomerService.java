@@ -40,9 +40,8 @@ public class CustomerService {
     }
 
     public Customer getCustomerRequired(UUID id){
-        return customerRepository.findById(id).orElseThrow(()->{
-            throw new EntityNotFoundExeprion(Customer.class,id);
-        });
+        return customerRepository.findById(id).orElseThrow(()->
+            new EntityNotFoundExeprion(Customer.class,id));
     }
 
     public void deleteCustomer(UUID id){

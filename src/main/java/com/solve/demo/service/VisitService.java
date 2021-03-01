@@ -5,7 +5,7 @@ package com.solve.demo.service;
 import com.solve.demo.domein.Visit;
 import com.solve.demo.dto.VisitFilter;
 import com.solve.demo.dto.VisitReadDTO;
-import com.solve.demo.service.TranslationService;
+
 
 import com.solve.demo.dto.VisitExtendedReadDTO;
 import com.solve.demo.exeprions.EntityNotFoundExeprion;
@@ -37,9 +37,8 @@ public class VisitService {
 
     }
     private Visit getVisitRequider(UUID id){
-        return visitRepository.findById(id).orElseThrow(()->{
-            throw new EntityNotFoundExeprion(Visit.class,id);
-        });
+        return visitRepository.findById(id).orElseThrow(()->
+            new EntityNotFoundExeprion(Visit.class,id));
     }
 
 

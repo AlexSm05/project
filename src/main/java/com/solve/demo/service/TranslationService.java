@@ -2,11 +2,13 @@ package com.solve.demo.service;
 
 import com.solve.demo.domein.Customer;
 import com.solve.demo.domein.Master;
+import com.solve.demo.domein.Vacation;
 import com.solve.demo.domein.Visit;
 import com.solve.demo.dto.*;
-import com.solve.demo.repository.CustomerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
+
+
 
 @Service
 public class TranslationService {
@@ -64,4 +66,13 @@ public class TranslationService {
             customer.setName(patch.getName());
         }
     }
+    public VacationReadDTO toRead(Vacation vacation){
+        VacationReadDTO dto =new VacationReadDTO();
+        dto.setId(vacation.getId());
+        dto.setStartAt(vacation.getStartAt());
+        dto.setEndAt(vacation.getEndAt());
+        dto.setMasterId(vacation.getMaster().getId());
+        return dto;
+    }
+
 }

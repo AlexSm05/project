@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsі="http://www.w3.org/2001/XMLSchema-instance"
+        xsі:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd ">
+
+
+    <changeSet id="load customer" author="postgres" runOnChange="true">
+        <loadUpdateData tableName="customer" file="db/data/customers.csv" separator=";" primaryKey="id">
+            <column name="id" type="uuid"/>
+            <column name="name" type="string"/>
+            <column name="phone" type="string"/>
+        </loadUpdateData>
+    </changeSet>
+    <changeSet id="load master" author="postgres" runOnChange="true">
+        <loadUpdateData tableName="master" file="db/data/masters.csv" separator=";" primaryKey="id">
+            <column name="id" type="uuid"/>
+            <column name="name" type="string"/>
+            <column name="phone" type="string"/>
+            <column name="about" type="string"/>
+        </loadUpdateData>
+    </changeSet>
+    <changeSet id="load visit" author="postgres" runOnChange="true">
+        <loadUpdateData tableName="visit" file="db/data/visits.csv" separator=";" primaryKey="id">
+            <column name="id" type="uuid"/>
+            <column name="customer_id" type="uuid"/>
+            <column name="master_id" type="uuid"/>
+            <column name="start_at" type="datetime"/>
+            <column name="end_at" type="datetime"/>
+            <column name="status" type="string"/>
+        </loadUpdateData>
+    </changeSet>
+
+</databaseChangeLog>
