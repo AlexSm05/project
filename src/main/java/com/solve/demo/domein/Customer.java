@@ -18,6 +18,8 @@ public class Customer {
     private UUID id;
     private String name;
     private String phone;
+
+
 }
 
 

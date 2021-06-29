@@ -17,21 +17,22 @@ public class CustomerController {
 
 
     @GetMapping("/{id}")
-    public CustomerReadDTO getCustomer(@PathVariable UUID id){
+    public CustomerReadDTO getCustomer(@PathVariable UUID id) {
         return customerService.getCustomer(id);
     }
 
     @PostMapping
-    public CustomerReadDTO createCustomer(@RequestBody CustomerCreateDTO createDTO){
+    public CustomerReadDTO createCustomer(@RequestBody CustomerCreateDTO createDTO) {
         return customerService.createCustomer(createDTO);
     }
 
     @PatchMapping("/{id}")
-    public CustomerReadDTO patchCustomer(@PathVariable UUID id, @RequestBody CustomerPatchDTO patch){
-        return customerService.patchCustomer(id,patch);
+    public CustomerReadDTO patchCustomer(@PathVariable UUID id, @RequestBody CustomerPatchDTO patch) {
+        return customerService.patchCustomer(id, patch);
     }
+
     @DeleteMapping("/{id}")
-    public void deleteCustomer(@PathVariable UUID id){
+    public void deleteCustomer(@PathVariable UUID id) {
         customerService.deleteCustomer(id);
     }
 }

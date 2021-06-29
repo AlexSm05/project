@@ -30,10 +30,10 @@ public class LiquibaseLoadDataTest {
     private CustomerRepository customerRepository;
 
     @Test
-    public void testDataLoaded(){
-        Assert.assertTrue(customerRepository.count()>0);
-        Assert.assertTrue(masterRepository.count()>0);
-        Assert.assertTrue(visitRepository.count()>0);
+    public void testDataLoaded() {
+        Assert.assertTrue(customerRepository.count() > 0);
+        Assert.assertTrue(masterRepository.count() > 0);
+        Assert.assertTrue(visitRepository.count() > 0);
 
     }
 

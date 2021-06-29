@@ -18,15 +18,15 @@ public class VacationRepositoryCustomImpl implements VacationRepositoryCustom {
 
     @Override
     public List<Vacation> findByMasterId(UUID masterId) {
-        StringBuilder sb=new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         sb.append("select v from Vacation v where 1=1");
-        if (masterId!=null){
+        if (masterId != null) {
             sb.append(" and v.master.id = :masterId");
         }
-        TypedQuery<Vacation> query=entityManager.createQuery(sb.toString(),Vacation.class);
+        TypedQuery<Vacation> query = entityManager.createQuery(sb.toString(), Vacation.class);
 
-        if (masterId!=null){
-            query.setParameter("masterId",masterId);
+        if (masterId != null) {
+            query.setParameter("masterId", masterId);
         }
         return query.getResultList();
     }

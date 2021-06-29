@@ -16,7 +16,10 @@ import java.util.Optional;
 public class JpaAuditingConfig {
 
     @Bean
-    DateTimeProvider nowDateProvider(){
-        return ()-> Optional.of(Instant.now().truncatedTo(ChronoUnit.MICROS));
+    DateTimeProvider nowDateProvider() {
+        return () -> Optional.of(Instant.now().truncatedTo(ChronoUnit.SECONDS));
     }
+
+
+
 }

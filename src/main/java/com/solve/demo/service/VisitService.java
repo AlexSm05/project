@@ -3,6 +3,7 @@ package com.solve.demo.service;
 
 
 import com.solve.demo.domein.Visit;
+import com.solve.demo.dto.VisitCreateDTO;
 import com.solve.demo.dto.VisitFilter;
 import com.solve.demo.dto.VisitReadDTO;
 
@@ -14,9 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
 
 @Service
 public class VisitService {
@@ -27,18 +30,26 @@ public class VisitService {
     @Autowired
     private TranslationService translationService;
 
-    public VisitExtendedReadDTO getVisit(UUID id){
-        Visit visit=getVisitRequider(id);
+    public VisitExtendedReadDTO getVisit(UUID id) {
+        Visit visit = getVisitRequider(id);
         return translationService.toReadExtended(visit);
     }
-    public List<VisitReadDTO> getVisits(VisitFilter filter){
-        List<Visit> visits=visitRepository.findByFilter(filter);
+
+    public List<VisitReadDTO> getVisits(VisitFilter filter) {
+        List<Visit> visits = visitRepository.findByFilter(filter);
         return visits.stream().map(translationService::toRead).collect(Collectors.toList());
 
     }
-    private Visit getVisitRequider(UUID id){
-        return visitRepository.findById(id).orElseThrow(()->
-            new EntityNotFoundExeprion(Visit.class,id));
+
+    public  VisitReadDTO createVisit(VisitCreateDTO create) {
+        Visit visit = translationService.toEntity(create);
+        visit = visitRepository.save(visit);
+        return translationService.toRead(visit);
+    }
+
+    private Visit getVisitRequider(UUID id) {
+        return visitRepository.findById(id).orElseThrow(() ->
+            new EntityNotFoundExeprion(Visit.class, id));
     }
 
 

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.Instant;
+
 import java.util.UUID;
 
 @Data
@@ -33,5 +34,6 @@ public class Visit extends AbstractEntity {
     @CreatedDate
     private Instant createdAt;
 
+    private Integer customerMark;
 
 }

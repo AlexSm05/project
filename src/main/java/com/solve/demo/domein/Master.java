@@ -2,10 +2,9 @@ package com.solve.demo.domein;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+
+
+import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,8 +20,8 @@ public class Master {
     private String phone;
     private String about;
 
-    //private Double avarageMark;
+    private Double averageMark;
 
-    @OneToMany(mappedBy = "master")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "master", cascade = CascadeType.ALL)
     private List<Vacation> vacations;
 }

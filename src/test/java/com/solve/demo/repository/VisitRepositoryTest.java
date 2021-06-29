@@ -100,6 +100,21 @@ public class VisitRepositoryTest {
         Assertions.assertThat(res).extracting(Visit::getId).isEqualTo(Arrays.asList(v1.getId(),v2.getId()));
     }
 
+    @Test
+    public void testCalcAverageMark() {
+        Customer c1=createCustomer();
+        Master m1=createMaster();
+        Master m2=createMaster();
+
+
+        createVisit(c1,m1,4);
+        createVisit(c1,m1,5);
+        createVisit(c1,m1,(Integer) null);
+        createVisit(c1,m2,2);
+
+        Assert.assertEquals(4.5,visitRepository.calcAverageMarkOfMaster(m1.getId()),Double.MIN_NORMAL);
+    }
+
     private Customer createCustomer(){
         Customer customer=new Customer();
         customer.setName("qwe");
@@ -132,6 +147,13 @@ public class VisitRepositoryTest {
         visit.setStartAt(instant);
         visit.setEndAt(instant);
         visit.setStatus(visitStatus);
+        return visitRepository.save(visit);
+    }
+    private Visit createVisit(Customer customer, Master master, Integer customerMark)  {
+        Visit visit= new Visit();
+        visit.setCustomer(customer);
+        visit.setMaster(master);
+        visit.setCustomerMark(customerMark);
         return visitRepository.save(visit);
     }
 }

@@ -30,6 +30,7 @@
             <column name="start_at" type="datetime"/>
             <column name="end_at" type="datetime"/>
             <column name="status" type="string"/>
+            <column name="created_at" type="datetime"/>
         </loadUpdateData>
     </changeSet>
 

@@ -11,12 +11,15 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface VisitRepository extends CrudRepository<Visit, UUID>,VisitRepositoryCustom {
+public interface VisitRepository extends CrudRepository<Visit, UUID>, VisitRepositoryCustom {
 
-    List<Visit> findByMasterIdAndStatusOrderByStartAtAsc(UUID id,VisitStatus visitStatus);
+    List<Visit> findByMasterIdAndStatusOrderByStartAtAsc(UUID id, VisitStatus visitStatus);
 
     @Query("select v from Visit v where v.master.id = :masterId and v.status = :visitStatus"
-            +" and v.startAt >= :startFrom and v.startAt < :startTo order by v.startAt asc")
+            + " and v.startAt >= :startFrom and v.startAt < :startTo order by v.startAt asc")
     List<Visit> findVisitsForMasterInGivenInterval(
             UUID masterId, VisitStatus visitStatus, Instant startFrom, Instant startTo);
+
+    @Query("select avg(v.customerMark) from Visit v where v.master.id = :masterId")
+    Double calcAverageMarkOfMaster(UUID masterId);
 }

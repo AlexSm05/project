@@ -20,31 +20,31 @@ public class CustomerService {
     private TranslationService translationService;
 
 
-    public CustomerReadDTO getCustomer(UUID id){
-        Customer customer= getCustomerRequired(id);
+    public CustomerReadDTO getCustomer(UUID id) {
+        Customer customer = getCustomerRequired(id);
         return translationService.toRead(customer);
     }
 
-    public CustomerReadDTO createCustomer(CustomerCreateDTO create){
-        Customer customer=translationService.toEntity(create);
-        customer= customerRepository.save(customer);
+    public CustomerReadDTO createCustomer(CustomerCreateDTO create) {
+        Customer customer = translationService.toEntity(create);
+        customer = customerRepository.save(customer);
         return translationService.toRead(customer);
     }
 
     @PatchMapping("/{id}")
-    public CustomerReadDTO patchCustomer(UUID id, CustomerPatchDTO patch){
-        Customer customer=getCustomerRequired(id);
-        translationService.patchEntity(patch,customer);
-        customer=customerRepository.save(customer);
+    public CustomerReadDTO patchCustomer(UUID id, CustomerPatchDTO patch) {
+        Customer customer = getCustomerRequired(id);
+        translationService.patchEntity(patch, customer);
+        customer = customerRepository.save(customer);
         return translationService.toRead(customer);
     }
 
-    public Customer getCustomerRequired(UUID id){
-        return customerRepository.findById(id).orElseThrow(()->
-            new EntityNotFoundExeprion(Customer.class,id));
+    public Customer getCustomerRequired(UUID id) {
+        return customerRepository.findById(id).orElseThrow(() ->
+            new EntityNotFoundExeprion(Customer.class, id));
     }
 
-    public void deleteCustomer(UUID id){
+    public void deleteCustomer(UUID id) {
         customerRepository.delete(getCustomerRequired(id));
     }
 

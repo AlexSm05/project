@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ControllerAdvice
 public class RestExeprionHandler {
     @ExceptionHandler(value = Exception.class)
-    public ResponseEntity <Object> handlerExeption(Exception ex){
-        ResponseStatus status= AnnotatedElementUtils.findMergedAnnotation(ex.getClass(),ResponseStatus.class);
-        HttpStatus httpStatus= status!= null ?status.code(): HttpStatus.INTERNAL_SERVER_ERROR;
+    public ResponseEntity<Object> handlerExeption(Exception ex) {
+        ResponseStatus status = AnnotatedElementUtils.findMergedAnnotation(ex.getClass(), ResponseStatus.class);
+        HttpStatus httpStatus = status != null ? status.code() : HttpStatus.INTERNAL_SERVER_ERROR;
 
-        ErrorInfo errorInfo= new ErrorInfo(httpStatus,ex.getClass(),ex.getMessage());
-        return new ResponseEntity<>(errorInfo,new HttpHeaders(),httpStatus);
+        ErrorInfo errorInfo = new ErrorInfo(httpStatus, ex.getClass(), ex.getMessage());
+        return new ResponseEntity<>(errorInfo, new HttpHeaders(), httpStatus);
 
     }
 }

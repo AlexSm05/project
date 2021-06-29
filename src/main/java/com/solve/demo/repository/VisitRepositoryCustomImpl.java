@@ -17,39 +17,39 @@ public class VisitRepositoryCustomImpl implements VisitRepositoryCustom {
 
     @Override
     public List<Visit> findByFilter(VisitFilter filter) {
-        StringBuilder sb=new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         sb.append("select v from Visit v where 1=1");
-        if (filter.getCustomerId()!=null){
+        if (filter.getCustomerId() != null) {
             sb.append(" and v.customer.id = :customerId");
         }
-        if (filter.getMasterId()!=null){
+        if (filter.getMasterId() != null) {
             sb.append(" and v.master.id = :masterId");
         }
-        if (filter.getStatuses()!=null&& !filter.getStatuses().isEmpty()){
+        if (filter.getStatuses() != null && !filter.getStatuses().isEmpty()) {
             sb.append(" and v.status in (:statuses)");
         }
-        if (filter.getStartAtFrom()!=null){
+        if (filter.getStartAtFrom() != null) {
             sb.append(" and v.startAt >= (:startAtFrom)");
         }
-        if (filter.getStartAtTo()!=null){
+        if (filter.getStartAtTo() != null) {
             sb.append(" and v.startAt < (:startAtTo)");
         }
-        TypedQuery<Visit> query=entityManager.createQuery(sb.toString(),Visit.class);
+        TypedQuery<Visit> query = entityManager.createQuery(sb.toString(), Visit.class);
 
-        if (filter.getCustomerId()!=null){
-            query.setParameter("customerId",filter.getCustomerId());
+        if (filter.getCustomerId() != null) {
+            query.setParameter("customerId", filter.getCustomerId());
         }
-        if (filter.getMasterId()!=null){
-            query.setParameter("masterId",filter.getMasterId());
+        if (filter.getMasterId() != null) {
+            query.setParameter("masterId", filter.getMasterId());
         }
-        if (filter.getStatuses()!=null&& !filter.getStatuses().isEmpty()){
-            query.setParameter("statuses",filter.getStatuses());
+        if (filter.getStatuses() != null && !filter.getStatuses().isEmpty()) {
+            query.setParameter("statuses", filter.getStatuses());
         }
-        if (filter.getStartAtFrom()!=null){
-            query.setParameter("startAtFrom",filter.getStartAtFrom());
+        if (filter.getStartAtFrom() != null) {
+            query.setParameter("startAtFrom", filter.getStartAtFrom());
         }
-        if (filter.getStartAtTo()!=null){
-            query.setParameter("startAtTo",filter.getStartAtTo());
+        if (filter.getStartAtTo() != null) {
+            query.setParameter("startAtTo", filter.getStartAtTo());
         }
         return query.getResultList();
     }
